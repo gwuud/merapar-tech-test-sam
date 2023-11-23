@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Merapar Tech Test (Serverless)
+
+Parameters:
+  Stage:
+    Type: String
+    Default: merapar
+
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 128
+
+Resources:
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: merapar-tech-test/
+      Handler: merapar-tech-test
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+            RestApiId: !Ref Api
+
+Outputs:
+  MeraparTechTestAPI:
+    Description: "Application Endpoint"
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"
