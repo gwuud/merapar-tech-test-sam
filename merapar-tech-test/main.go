@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
+	"log"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -13,13 +13,13 @@ import (
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	t, err := template.New("index").Parse(`<h1>The Saved String Is {{ . }}!</h1>`)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 
 	var rendered strings.Builder
 	err = t.Execute(&rendered, randomstring.HumanFriendlyString(10))
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 
 	return events.APIGatewayProxyResponse{
