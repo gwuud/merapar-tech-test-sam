@@ -1,4 +1,4 @@
-.PHONY: test-func test-api build deploy delete
+.PHONY: init test-func test-api build deploy delete
 
 init:
 	sam init --runtime go1.x
@@ -10,7 +10,7 @@ test-api:
 	sam invoke start-api -p 8080
 
 build:
-	sam build
+	sam build -t template.yaml
 
 deploy:
 	sam deploy
