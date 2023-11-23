@@ -1,5 +1,8 @@
 .PHONY: test-func test-api build deploy delete
 
+init:
+	sam init --runtime go1.x
+
 test-func:
 	sam invoke start-lambda
 
