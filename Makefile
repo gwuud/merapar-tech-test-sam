@@ -4,10 +4,10 @@ init:
 	sam init --runtime go1.x
 
 test-func:
-	sam invoke start-lambda
+	sam local start-lambda
 
 test-api:
-	sam invoke start-api -p 8080
+	sam local start-api -p 8080
 
 build:
 	sam build -t template.yaml
